@@ -1,5 +1,4 @@
 import "./pages/index.css";
-// import { initialCards } from "./scripts/cards.js";
 import { closeModal, openModal } from "./components/modals/modal.js";
 import { createCard, deleteCard, likeCard } from "./components/card/card.js";
 import {
@@ -128,10 +127,10 @@ popups.forEach((popup) => {
   });
 });
 
-function handleImageClick(cardImage, cardDescriptionTitle) {
-  const cardImageSrc = cardImage.src;
-  const cardImageAlt = cardImage.alt;
-  const cardDescriptionTitleText = cardDescriptionTitle.textContent;
+function handleImageClick(link, name) {
+  const cardImageSrc = link;
+  const cardImageAlt = name;
+  const cardDescriptionTitleText = name;
 
   popupImage.src = cardImageSrc;
   popupImage.alt = cardImageAlt;
@@ -169,7 +168,7 @@ function handleFormSubmitNewPlace(evt) {
       evt.target.reset();
     })
     .catch((err) => console.log(err))
-    .finally(() => preLoadText(btn, "Создать"))
+    .finally(() => preLoadText(btn, "Создать"));
   closeModal(popupTypeNewCard);
 }
 

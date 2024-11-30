@@ -46,7 +46,7 @@ export function createCard(
   );
 
   cardImage.addEventListener("click", () =>
-    handleImageClick(cardImage, cardDescriptionTitle)
+    handleImageClick(card.link, card.name)
   );
 
   return cardElement;
