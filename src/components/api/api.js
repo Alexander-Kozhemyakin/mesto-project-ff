@@ -20,7 +20,7 @@ export const getUserInfo = () => {
     headers: config.headers,
   })
     .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    // .catch((err) => console.log(err));
 };
 
 export const getInitialCards = () => {
@@ -29,7 +29,7 @@ export const getInitialCards = () => {
     headers: config.headers,
   })
     .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    // .catch((err) => console.log(err));
 };
 
 export const updateUserInfo = (name, about) => {
@@ -41,8 +41,8 @@ export const updateUserInfo = (name, about) => {
       about: about,
     }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then(checkResponse)
+    // .catch((err) => console.log(err));
 };
 
 export const addNewCard = (name, link) => {
@@ -54,8 +54,8 @@ export const addNewCard = (name, link) => {
       link: link,
     }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then(checkResponse)
+    // .catch((err) => console.log(err));
 };
 
 export const addLikeCardApi = (cardId) => {
@@ -63,8 +63,8 @@ export const addLikeCardApi = (cardId) => {
     method: "PUT",
     headers: config.headers,
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then(checkResponse)
+    // .catch((err) => console.log(err));
 };
 
 export const deleteLikeCardApi = (cardId) => {
@@ -72,8 +72,8 @@ export const deleteLikeCardApi = (cardId) => {
     method: "DELETE",
     headers: config.headers,
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then(checkResponse)
+    // .catch((err) => console.log(err));
 };
 
 export function deleteCardApi(cardId) {
@@ -81,8 +81,8 @@ export function deleteCardApi(cardId) {
     method: "DELETE",
     headers: config.headers,
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then(checkResponse)
+    // .catch((err) => console.log(err));
 }
 
 export const updateAvatar = (newAvatarLink) => {
@@ -93,6 +93,6 @@ export const updateAvatar = (newAvatarLink) => {
       avatar: newAvatarLink.value,
     }),
   })
-    .then((res) => checkResponse(res))
-    .catch((err) => console.log(err));
+    .then(checkResponse)
+    // .catch((err) => console.log(err));
 };

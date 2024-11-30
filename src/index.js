@@ -59,31 +59,6 @@ const configValidation = {
   errorClass: "popup__error_visible",
 };
 
-const add_icon = new URL("./images/add-icon.svg", import.meta.url);
-const avatar = new URL("./images/avatar.jpg", import.meta.url);
-const card_1 = new URL("./images/card_1.jpg", import.meta.url);
-const card_2 = new URL("./images/card_2.jpg", import.meta.url);
-const card_3 = new URL("./images/card_3.jpg", import.meta.url);
-const close_svg = new URL("./images/close.svg", import.meta.url);
-const delete_icon = new URL("./images/delete-icon.svg", import.meta.url);
-const edit_icon = new URL("./images/edit-icon.svg", import.meta.url);
-const like_active = new URL("./images/like-active.svg", import.meta.url);
-const like_inactive = new URL("./images/like-inactive.svg", import.meta.url);
-const logo = new URL("./images/logo.svg", import.meta.url);
-const images = [
-  { name: "add_icon", link: add_icon },
-  { name: "avatar", link: avatar },
-  { name: "card_1", link: card_1 },
-  { name: "card_2", link: card_2 },
-  { name: "card_3", link: card_3 },
-  { name: "close_svg", link: close_svg },
-  { name: "delete_icon", link: delete_icon },
-  { name: "edit_icon", link: edit_icon },
-  { name: "like_active", link: like_active },
-  { name: "like_inactive", link: like_inactive },
-  { name: "logo", link: logo },
-];
-
 function preLoadText(btn, text) {
   btn.textContent = text;
 }
@@ -100,23 +75,28 @@ function renderCard(card, method = "prepend") {
   cardList[method](cardElement);
 }
 
-editButton.addEventListener("click", () => {
+function clickEditButton() {
   clearValidation(configValidation, formElementEdit);
   nameInput.value = profileTitle.textContent;
   jobInput.value = profileDescription.textContent;
   openModal(popupTypeEdit);
-});
+}
 
-profileAddButton.addEventListener("click", () => {
+editButton.addEventListener("click", clickEditButton);
+
+function clickProfileButton() {
   clearValidation(configValidation, formElementNewPlace);
   openModal(popupTypeNewCard);
-});
+}
 
-// открытие модального окна по клику на картинку
-profileImage.addEventListener("click", () => {
+profileAddButton.addEventListener("click", clickProfileButton);
+
+function clickProfileImage() {
   clearValidation(configValidation, formElementEditAvatar);
   openModal(popupTypeEditAvatar);
-});
+}
+// открытие модального окна по клику на картинку
+profileImage.addEventListener("click", clickProfileImage);
 
 // функция для замены аватара
 function handleFormSubmitEditAvatar(evt) {
@@ -125,11 +105,13 @@ function handleFormSubmitEditAvatar(evt) {
   const btn = form.querySelector(".popup__button");
   const input = form.querySelector(".popup__input_type_url");
   preLoadText(btn, "Сохранение...");
-  updateAvatar(newAvatarLink).then(() => {
-    profileImage.style.backgroundImage = `url(${newAvatarLink.value})`;
-    preLoadText(btn, "Сохранить");
-    input.value = "";
-  });
+  updateAvatar(newAvatarLink)
+    .then(() => {
+      profileImage.style.backgroundImage = `url(${newAvatarLink.value})`;
+      input.value = "";
+    })
+    .catch((err) => console.log(err))
+    .finally(() => preLoadText(btn, "Сохранить"));
   closeModal(popupTypeEditAvatar);
 }
 
@@ -163,11 +145,13 @@ function handleFormSubmitEdit(evt) {
   const form = evt.target;
   const btn = form.querySelector(".popup__button");
   preLoadText(btn, "Сохранение...");
-  updateUserInfo(newName.value, newJob.value).then(() => {
-    profileTitle.textContent = newName.value;
-    profileDescription.textContent = newJob.value;
-    preLoadText(btn, "Сохранить");
-  });
+  updateUserInfo(newName.value, newJob.value)
+    .then(() => {
+      profileTitle.textContent = newName.value;
+      profileDescription.textContent = newJob.value;
+    })
+    .catch((err) => console.log(err))
+    .finally(() => preLoadText(btn, "Сохранить"));
 
   closeModal(popupTypeEdit);
 }
@@ -179,12 +163,14 @@ function handleFormSubmitNewPlace(evt) {
   const form = evt.target;
   const btn = form.querySelector(".popup__button");
   preLoadText(btn, "Сохранение...");
-  addNewCard(newPlaceName.value, newPlaceLink.value).then((newCard) => {
-    renderCard(newCard, "prepend");
-    preLoadText(btn, "Создать");
-  });
+  addNewCard(newPlaceName.value, newPlaceLink.value)
+    .then((newCard) => {
+      renderCard(newCard, "prepend");
+      evt.target.reset();
+    })
+    .catch((err) => console.log(err))
+    .finally(() => preLoadText(btn, "Создать"))
   closeModal(popupTypeNewCard);
-  evt.target.reset();
 }
 
 formElementNewPlace.addEventListener("submit", handleFormSubmitNewPlace);
